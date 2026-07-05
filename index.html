@@ -395,29 +395,6 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
   .display-3 {
     font-size: 22px !important;
   }
-
-  /* Reset layout grids across all inner pages to single column stack */
-  #page-services .wrap,
-  .scale-flip-grid,
-  .pipeline-block,
-  .founder-grid-layout,
-  .team-grid,
-  .footer-top {
-    grid-template-columns: 1fr !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 24px !important;
-    width: 100% !important;
-  }
-
-  /* Prevent interactive components from clipping past the device bezel */
-  .pipeline, .pipeline-info-section, .wheel-section, .page-banner {
-    width: 100% !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    overflow: hidden !important;
-  }
-
   /* Center alignment overrides for better readability on smartphones */
   .hero-eyebrow-row {
     justify-content: center !important;
@@ -502,6 +479,60 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
   /* Ensure the burger menu button displays inline correctly */
   .nav-burger {
     display: flex !important;
+  }
+  /* COMPLETE STRUCTURAL RESET FOR CAPABILITIES JOURNEY */
+  .pipeline-block {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    width: 100% !important;
+    padding-left: 36px !important;
+    margin: 0 0 32px 0 !important;
+  }
+
+  /* FORCES ALL TEXT ELEMENTS TO THE TOP */
+  .pipeline-block .pipe-meta-side {
+    order: 1 !important; /* Overrides HTML sequence completely */
+    text-align: left !important;
+    width: 100% !important;
+    opacity: 1 !important;
+    transform: none !important;
+    display: block !important;
+  }
+
+  /* FORCES ALL TAGS TO THE BOTTOM BELOW TEXT */
+  .pipeline-block .pipe-tags-side {
+    order: 2 !important; /* Locks tags below text fields */
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    justify-content: flex-start !important;
+    align-content: flex-start !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 8px 0 0 0 !important;
+  }
+
+  /* REMOVES SCROLL-ANIMATION BLUR & CLIPPING RISKS */
+  .pipe-tag {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    display: inline-block !important;
+  }
+
+  /* TIMELINE PINS FIX */
+  .timeline-back-line {
+    left: 12px !important;
+    transform: none !important;
+  }
+  .pipeline-dot {
+    left: 12px !important;
+    top: 24px !important;
+    transform: translateY(-50%) !important;
+    opacity: 1 !important;
   }
 }
 </style>
@@ -715,7 +746,7 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
               <path d="M21 5l-10 9 10 9" stroke="url(#kiraLogoGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
               <circle cx="23" cy="5" r="2.5" fill="#F97316" />
             </svg>
-            <h3 style="font-size: 22px; font-weight: 800; color: var(--ink);">KIRA</h3>
+            <h3 style="font-size: 22px; font-weight: 800; color: var(--ink);">BRANDKIRA</h3>
           </div>
           <!-- Features Entry List -->
           <div class="flip-rows-wrapper" style="display: flex; flex-direction: column; gap: 18px;">
@@ -1165,9 +1196,9 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
       <div class="footer-top">
         <div class="footer-manifesto">We don't sell marketing. <span class="k">We build the system behind it</span> — knowledge, innovation, results, achievement.</div>
         <div class="footer-cols">
-          <div class="footer-col"><h4>Services</h4><ul><li><a onclick="showPage('services')">Performance marketing</a></li><li><a onclick="showPage('services')">SEO</a></li><li><a onclick="showPage('services')">Reel production</a></li><li><a onclick="showPage('services')">Website dev</a></li></ul></div>
+          <div class="footer-col"><h4>Services</h4><ul><li><a onclick="showPage('services')">Brand Foundation</a></li><li><a onclick="showPage('services')">Digital Experiences</a></li><li><a onclick="showPage('services')">Content &amp; Creative</a></li><li><a onclick="showPage('services')">Growth &amp; Performance</a></li></ul></div>
           <div class="footer-col"><h4>Company</h4><ul><li><a onclick="showPage('about')">About</a></li><li><a onclick="showPage('contact')">Contact</a></li><li><a onclick="showPage('foundation')">Foundation</a></li><li><a onclick="showPage('privacy')">Privacy Policy</a></li></ul></div>
-          <div class="footer-col"><h4>Contact</h4><ul><li><a>info@brandkira.com</a></li><li><a>+91 98100 00000</a></li><li><a>Delhi NCR, India</a></li></ul></div>
+          <div class="footer-col"><h4>Contact</h4><ul><li><a>info@brandkira.com</a></li><li><a>+91 97737 18446</a></li><li><a>Delhi NCR, India</a></li></ul></div>
         </div>
       </div>
       <!-- ================= START: SEO OPTIMIZED VECTOR SOCIAL CHANNELS ================= -->
