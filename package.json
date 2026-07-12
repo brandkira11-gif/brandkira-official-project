@@ -4,5 +4,8 @@
   "private": true,
   "dependencies": {
     "nodemailer": "^9.0.3"
+  },
+  "engines": {
+    "node": "20.x"
   }
 }
