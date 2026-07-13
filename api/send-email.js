@@ -4,18 +4,18 @@ module.exports = async (req, res) => {
 
     if (req.method === "GET") {
         return res.status(200).json({
-            message: "API Working"
+            success: true,
+            message: "BrandKira Email API Working"
         });
     }
 
     if (req.method !== "POST") {
         return res.status(405).json({
-            success: false
+            success: false,
+            message: "Method Not Allowed"
         });
     }
 
-    // Rest of your code...
-};
     try {
 
         const {
@@ -28,81 +28,48 @@ module.exports = async (req, res) => {
             leadId
         } = req.body;
 
-       const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
-    secure: process.env.SMTP_PORT == 465,
-
+        const transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST,
+            port: Number(process.env.SMTP_PORT),
+            secure: Number(process.env.SMTP_PORT) === 465,
             auth: {
                 user: process.env.SMTP_USER,
                 pass: process.env.SMTP_PASS
             }
-
         });
 
-        // -----------------------------
-        // Email to You
-        // -----------------------------
+        // Verify SMTP connection
+        await transporter.verify();
 
+        // Email to BrandKira
         await transporter.sendMail({
-
             from: `"BrandKira" <${process.env.SMTP_USER}>`,
-
             to: "brandkira11@gmail.com",
-
             subject: `🔔 New BrandKira Lead - ${leadId}`,
-
             html: `
-            <h2>New BrandKira Lead</h2>
-
-            <p><b>Lead ID:</b> ${leadId}</p>
-            <p><b>Name:</b> ${name}</p>
-            <p><b>Company:</b> ${company}</p>
-            <p><b>Email:</b> ${email}</p>
-            <p><b>Phone:</b> ${phone}</p>
-            <p><b>Budget:</b> ${budget}</p>
-
-            <h3>Requirement</h3>
-
-            <p>${requirement}</p>
+                <h2>New Lead Received</h2>
+                <p><b>Lead ID:</b> ${leadId}</p>
+                <p><b>Name:</b> ${name}</p>
+                <p><b>Company:</b> ${company}</p>
+                <p><b>Email:</b> ${email}</p>
+                <p><b>Phone:</b> ${phone}</p>
+                <p><b>Budget:</b> ${budget}</p>
+                <p><b>Requirement:</b><br>${requirement}</p>
             `
         });
 
-        // -----------------------------
-        // Confirmation Email
-        // -----------------------------
-
+        // Email to Client
         await transporter.sendMail({
-
             from: `"BrandKira" <${process.env.SMTP_USER}>`,
-
             to: email,
-
             subject: "Thank you for contacting BrandKira",
-
             html: `
-            <h1>Thank You ${name} 👋</h1>
-
-            <p>
-            We have received your enquiry successfully.
-            </p>
-
-            <p>
-            <b>Lead ID:</b> ${leadId}
-            </p>
-
-            <p>
-            Our strategy team will contact you within
-            one business day.
-            </p>
-
-            <br>
-
-            <p>
-            Regards,
-            <br>
-            <b>BrandKira</b>
-            </p>
+                <h1>Thank You, ${name}! 👋</h1>
+                <p>We have received your enquiry successfully.</p>
+                <p><b>Lead ID:</b> ${leadId}</p>
+                <p>Our team will contact you within one business day.</p>
+                <br>
+                <p>Regards,<br><b>BrandKira</b></p>
             `
         });
 
@@ -110,13 +77,13 @@ module.exports = async (req, res) => {
             success: true
         });
 
-    } catch (err) {
+    } catch (error) {
 
-        console.error(err);
+        console.error(error);
 
         return res.status(500).json({
             success: false,
-            error: err.message
+            error: error.message
         });
 
     }
