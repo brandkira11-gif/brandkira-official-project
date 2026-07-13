@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 
 module.exports = async (req, res) => {
 
+    // Allow GET request for testing
     if (req.method === "GET") {
         return res.status(200).json({
             success: true,
@@ -38,38 +39,42 @@ module.exports = async (req, res) => {
             }
         });
 
-        // Verify SMTP connection
         await transporter.verify();
 
-        // Email to BrandKira
+        // Notification email
         await transporter.sendMail({
             from: `"BrandKira" <${process.env.SMTP_USER}>`,
             to: "brandkira11@gmail.com",
             subject: `🔔 New BrandKira Lead - ${leadId}`,
             html: `
                 <h2>New Lead Received</h2>
-                <p><b>Lead ID:</b> ${leadId}</p>
+
                 <p><b>Name:</b> ${name}</p>
                 <p><b>Company:</b> ${company}</p>
                 <p><b>Email:</b> ${email}</p>
                 <p><b>Phone:</b> ${phone}</p>
                 <p><b>Budget:</b> ${budget}</p>
-                <p><b>Requirement:</b><br>${requirement}</p>
+                <p><b>Requirement:</b> ${requirement}</p>
             `
         });
 
-        // Email to Client
+        // Client confirmation
         await transporter.sendMail({
             from: `"BrandKira" <${process.env.SMTP_USER}>`,
             to: email,
             subject: "Thank you for contacting BrandKira",
             html: `
-                <h1>Thank You, ${name}! 👋</h1>
-                <p>We have received your enquiry successfully.</p>
-                <p><b>Lead ID:</b> ${leadId}</p>
+                <h1>Thank you ${name} 👋</h1>
+
+                <p>We received your enquiry successfully.</p>
+
+                <p>Lead ID: <b>${leadId}</b></p>
+
                 <p>Our team will contact you within one business day.</p>
+
                 <br>
-                <p>Regards,<br><b>BrandKira</b></p>
+
+                <p>Regards,<br>BrandKira Team</p>
             `
         });
 
