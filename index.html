@@ -1865,11 +1865,9 @@ async function submitContact() {
 
     const btn = document.querySelector(".f-submit");
 
-    // Disable button while sending
     btn.disabled = true;
     btn.innerHTML = "Sending...";
 
-    // Collect form data
     const data = {
         name: document.getElementById("name").value.trim(),
         company: document.getElementById("company").value.trim(),
@@ -1879,8 +1877,8 @@ async function submitContact() {
         requirement: document.getElementById("requirement").value.trim()
     };
 
-    // Basic validation
     if (!data.name || !data.email || !data.phone) {
+
         alert("Please fill all required fields.");
 
         btn.disabled = false;
@@ -1890,7 +1888,11 @@ async function submitContact() {
 
     try {
 
-        const response = await fetch(
+        // ===========================
+        // STEP 1 : Save Lead to Google Sheet
+        // ===========================
+
+        const sheetResponse = await fetch(
             "https://script.google.com/macros/s/AKfycbzo4kT8xP-xWAGjLeZvoTz7ev4Qln-z8FhIA6sprJy5IYAkku3cOkXfsy3eGNJSkh41/exec",
             {
                 method: "POST",
@@ -1901,41 +1903,75 @@ async function submitContact() {
             }
         );
 
-        const result = await response.json();
+        const sheetResult = await sheetResponse.json();
 
-        if (result.success) {
+        if (!sheetResult.success) {
+            throw new Error(sheetResult.error || "Unable to save lead.");
+        }
 
-            // Hide Form
-            document.getElementById("contactFormWrap").style.display = "none";
+        // ===========================
+        // STEP 2 : Send Emails
+        // ===========================
 
-            // Show Success Box
-            document.getElementById("contactSuccess").style.display = "block";
+        const emailResponse = await fetch("/api/send-email", {
 
-            // Reset Form
-            document.getElementById("name").value = "";
-            document.getElementById("company").value = "";
-            document.getElementById("email").value = "";
-            document.getElementById("phone").value = "";
-            document.getElementById("budget").selectedIndex = 0;
-            document.getElementById("requirement").value = "";
+            method: "POST",
 
-        } else {
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-            alert(result.error || "Something went wrong.");
+            body: JSON.stringify({
+
+                ...data,
+
+                leadId: sheetResult.leadId
+
+            })
+
+        });
+
+        const emailResult = await emailResponse.json();
+
+        if (!emailResult.success) {
+
+            console.error("Email Error:", emailResult.error);
+
+            alert("Lead saved but email could not be sent.");
 
         }
 
-    } catch (error) {
+        // ===========================
+        // STEP 3 : Success
+        // ===========================
 
-        console.error(error);
-        alert("Unable to connect to the server.");
+        document.getElementById("contactFormWrap").style.display = "none";
 
-    } finally {
+        document.getElementById("contactSuccess").style.display = "block";
 
-        btn.disabled = false;
-        btn.innerHTML = "Send message";
+        document.getElementById("name").value = "";
+        document.getElementById("company").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("budget").selectedIndex = 0;
+        document.getElementById("requirement").value = "";
 
     }
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message || "Something went wrong.");
+
+    }
+    finally {
+
+        btn.disabled = false;
+
+        btn.innerHTML = "Send Message";
+
+    }
+
 }
 </script>
 </body>
