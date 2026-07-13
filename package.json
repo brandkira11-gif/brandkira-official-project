@@ -2,10 +2,10 @@
   "name": "brandkira",
   "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "nodemailer": "^9.0.3"
-  },
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
+  },
+  "dependencies": {
+    "nodemailer": "^6.10.1"
   }
 }
