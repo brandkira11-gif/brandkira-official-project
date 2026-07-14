@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <!-- Google tag (gtag.js) -->
+ <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GX7ZVXD6DV"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -203,6 +203,28 @@ html[data-theme="dark"] .icon-sun{display:block}
 .proof-sep{width:1px;height:28px;background:var(--line-strong)}
 
 /* PIPELINE ANIMATION */
+/* CLEAN REVENUE COUNTER - COALESCED HORIZONTALLY ON LAPTOP */
+.pipe-result {
+  display: inline-flex !important;
+  flex-direction: row !important;      /* Forces text beside the number */
+  align-items: baseline !important;    /* Aligns text perfectly with numbers baseline */
+  gap: 6px !important;                 /* Clean spacing gap between number and word */
+  justify-content: flex-end !important;
+  flex-shrink: 0 !important;
+  text-align: right !important;
+}
+
+.pipe-result b {
+  font-size: 15px !important;
+  font-weight: 800;
+  color: var(--violet);
+}
+
+.pipe-result span {
+  font-size: 11px !important;
+  color: var(--ink-mute);
+  white-space: nowrap !important;       /* Prevents the phrase from wrapping to a new line */
+}
 .pipeline{position:relative;height:560px;display:flex;flex-direction:column;justify-content:center;gap:0}
 .pipe-track{position:relative;display:flex;flex-direction:column;gap:0}
 .pipe-node{display:flex;align-items:center;gap:18px;padding:15px 18px;border-radius:var(--r-lg);border:1px solid var(--line);background:rgba(30, 41, 59, 0.03);position:relative;transition:border-color .3s,box-shadow .3s;z-index:1}
@@ -281,27 +303,213 @@ html[data-theme="dark"] .wheel-core{box-shadow:0 20px 50px -10px rgba(0,0,0,.6)}
 .price-card.feat .price-btn:hover{background:var(--paper-center);color:var(--ink)}
 
 /* ============ CONTACT (split) ============ */
-.contact-split{display:grid;grid-template-columns:1fr 1fr;min-height:640px}
-.contact-left{padding:120px 60px;display:flex;flex-direction:column;justify-content:center;background:var(--ink);color:var(--paper-center)}
-.contact-left .eyebrow{color:var(--orange)}
-.contact-left h2{font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-0.03em;line-height:1.02;margin:18px 0 24px}
-.contact-left p{font-size:16px;color:var(--ink-mute);line-height:1.7;max-width:380px;margin-bottom:36px}
-.contact-detail{display:flex;flex-direction:column;gap:16px}
-.cdx{display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:14px;font-size:14px}
-.cdx span:first-child{color:var(--ink-mute)}
-.contact-right{padding:120px 60px;display:flex;flex-direction:column;justify-content:center}
-.fgroup{margin-bottom:22px}
-.fgroup label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:var(--ink-soft)}
-.fgroup input,.fgroup select,.fgroup textarea{width:100%;border:none;border-bottom:1.5px solid var(--line-strong);background:none;padding:10px 2px;font-size:15px;font-family:inherit;color:var(--ink);transition:border-color .25s;outline:none}
-.fgroup input::placeholder,.fgroup textarea::placeholder{color:var(--ink-mute)}
-.fgroup input:focus,.fgroup select:focus,.fgroup textarea:focus{border-color:var(--orange)}
-.fgroup textarea{resize:vertical;height:80px}
-.frow2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.f-submit{margin-top:10px;width:100%}
-.f-success{display:none;text-align:center;padding:30px 0}
-.f-success .ico{width:52px;height:52px;border-radius:50%;background:var(--orange-tint);color:var(--orange-deep);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
-.f-success h3{font-size:22px;font-weight:800;margin-bottom:8px}
-.f-success p{color:var(--ink-soft);font-size:14px}
+/* ==========================================================================
+   GLOBAL CONTACT SYSTEM (LAPTOP & GENERAL CANVASES)
+   ========================================================================== */
+.contact-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 640px;
+}
+
+.contact-left {
+  padding: 120px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Uses theme-aware variables to look perfect in dark mode too */
+  background: var(--ink);
+  color: var(--paper-center);
+  transition: background .35s ease, color .35s ease;
+}
+
+.contact-left .eyebrow {
+  color: var(--orange);
+}
+
+.contact-left h2 {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  margin: 18px 0 24px;
+}
+
+.contact-left p {
+  font-size: 16px;
+  color: var(--ink-mute);
+  line-height: 1.7;
+  max-width: 380px;
+  margin-bottom: 36px;
+}
+
+.contact-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cdx {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 14px;
+  font-size: 14px;
+}
+
+.cdx span:first-child {
+  color: var(--ink-mute);
+}
+
+.contact-right {
+  padding: 120px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: transparent;
+}
+
+/* ==========================================================================
+   FORM CONTROLS & FIELDS STYLING
+   ========================================================================== */
+.fgroup {
+  margin-bottom: 22px;
+}
+
+.fgroup label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--ink-soft);
+}
+
+.fgroup input,
+.fgroup select,
+.fgroup textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid var(--line-strong);
+  background: none;
+  padding: 10px 2px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--ink);
+  transition: border-color .25s, color .25s;
+  outline: none;
+}
+
+.fgroup input::placeholder,
+.fgroup textarea::placeholder {
+  color: var(--ink-mute);
+}
+
+.fgroup input:focus,
+.fgroup select:focus,
+.fgroup textarea:focus {
+  border-color: var(--orange);
+}
+
+.fgroup textarea {
+  resize: vertical;
+  height: 80px;
+}
+
+/* Select element options dark-mode compatibility rule */
+.fgroup select option {
+  background-color: var(--paper-center, #fff);
+  color: var(--ink, #000);
+}
+
+.frow2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.f-submit {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.f-success {
+  display: none;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.f-success .ico {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--orange-tint);
+  color: var(--orange-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+}
+
+.f-success h3 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.f-success p {
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   STRICT DARK-MODE SCHEME INVERSION (No Bright Clashing Split-Sided Layouts)
+   ========================================================================== */
+html[data-theme="dark"] .contact-left {
+  background: #14110C !important; /* Premium unified deep charcoal background asset */
+  color: #F8FAFC !important;
+}
+
+html[data-theme="dark"] .cdx {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme="dark"] .fgroup select option {
+  background-color: #1A1610 !important; /* Prevents raw default white pop-up fields */
+  color: #F8FAFC !important;
+}
+
+/* ==========================================================================
+   STRICT PHONE ACCESSIBILITY MEDIA QUERY MAPPING (max-width: 860px)
+   ========================================================================== */
+@media (max-width: 860px) {
+  #page-contact {
+    padding-top: 80px !important; /* Safe separation block to dodge top absolute nav links */
+  }
+
+  .contact-split {
+    display: flex !important;
+    flex-direction: column !important; /* Stacks column sections into clean list layers */
+    min-height: auto !important;
+    width: 100% !important;
+  }
+
+  .contact-left {
+    order: 1 !important; /* Locks "Ready to scale?" text layout content up at the top */
+    padding: 40px 24px !important; /* Safe mobile viewport edge limits */
+    width: 100% !important;
+  }
+
+  .contact-right {
+    order: 2 !important; /* Shifts input form items straight below the details cards */
+    padding: 40px 24px !important;
+    width: 100% !important;
+  }
+
+  .frow2 {
+    grid-template-columns: 1fr !important; /* Collapses two columns inputs on small screens */
+    gap: 0 !important;
+  }
+}
 
 /* ============ FOOTER ============ */
 footer{padding:90px 0 40px;border-top:1px solid var(--line)}
@@ -476,7 +684,29 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
     opacity: 1 !important;
     width: 100% !important;
   }
+  /* RESPONSIVE HORIZONTAL ALIGNMENT FOR MOBILE SMARTPHONES */
+  .pipe-result {
+    display: inline-flex !important;
+    flex-direction: row !important;    /* Keeps text beside the number */
+    align-items: baseline !important;
+    gap: 5px !important;               /* Clean side-by-side spacing */
+    justify-content: flex-end !important;
+    
+    /* REMOVE THE ACCIDENTAL LINE STYLING ENTIRELY */
+    border: none !important;
+    border-top: none !important;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
 
+  .pipe-result b {
+    font-size: 13px !important;        /* Crisply scales the numeric counter */
+  }
+
+  .pipe-result span {
+    font-size: 10px !important;
+    white-space: nowrap !important;    /* Blocks text wrapping to maintain inline sequence */
+  }
   /* Scale down the principle wheel graphics container to fit mobile screens comfortably */
   .wheel-wrap {
     width: 280px !important;
@@ -581,6 +811,206 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
     transform: translateY(-50%) !important;
     opacity: 1 !important;
   }
+  /* FIXES SQUISHED PIPELINE AND OVERLAPPING TEXT */
+  .pipe-node {
+    display: flex !important;
+    flex-direction: column !important; /* Alternates to column layout to fit screen elements */
+    align-items: flex-start !important;
+    gap: 12px !important;
+    position: relative !important;
+    padding-bottom: 20px !important;
+  }
+
+  /* Shifts content alignment layout */
+  .pipe-node > div:nth-child(2) {
+    width: 100% !important;
+    padding-right: 0 !important;
+  }
+/* PUSHES THE CONTACT PAGE DOWN SO IT CLEARS THE FIXED NAVBAR */
+  #page-contact {
+    padding-top: 90px !important; /* Adds clear breathing room below the header */
+  }
+
+  .contact-left {
+    order: 1 !important;
+    width: 100% !important;
+    padding: 30px 24px !important; /* Slightly tightens inner padding for balance */
+    background: var(--ink) !important;
+  }
+  /* RE-SHAPES THE OVERLAPPING REVENUE COUNTER NODES */
+  .pipe-result {
+    position: relative !important; /* Invalidate absolute float crashing metrics */
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+    display: flex !important;
+    flex-direction: row !important; /* Stacks elements side-by-side inside block */
+    align-items: center !important;
+    gap: 8px !important;
+    margin-top: 8px !important;
+    padding-top: 8px !important;
+    border-top: 1px dashed var(--line); /* Soft border divider for clean UI balance */
+    width: 100% !important;
+  }
+
+  .pipe-result b {
+    font-size: 16px !important;
+  }
+
+  .pipe-result span {
+    font-size: 11px !important;
+    margin: 0 !important;
+  }
+  /* FORCES CONTACT SPLIT TO STACK VERTICALLY */
+  .contact-split {
+    display: flex !important;
+    flex-direction: column !important; /* Stacks the panels vertically instead of side-by-side */
+    width: 100% !important;
+    min-height: auto !important;
+  }
+
+  /* TEXT PANELS (TOP POSITION) */
+  .contact-left {
+    order: 1 !important; /* Guarantees "Ready to scale?" text stays on top */
+    width: 100% !important;
+    padding: 40px 24px !important; /* Comfortable mobile padding spacing */
+    background: var(--ink) !important;
+  }
+
+  /* FORM PANEL (BOTTOM POSITION) */
+  .contact-right {
+    order: 2 !important; /* Places the form input matrix directly below the text */
+    width: 100% !important;
+    padding: 40px 24px !important;
+    background: transparent !important;
+  }
+
+  /* CLEAN UP BUDGET SELECT & FORM ROWS FOR SCREEN WIDTH */
+  .contact-right .frow2 {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+  
+  .contact-right .fgroup {
+    width: 100% !important;
+  }
+  /* ==========================================================================
+     FOUNDATION PAGE PHONE ACCESSIBILITY STACK RE-MAPPING
+     ========================================================================== */
+  #page-foundation .section-pad .wrap {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* Collapses the grid layout completely to drop text directly below headings */
+  .founder-message-section .wrap > div {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+
+  /* Unlocks the sticky position so it scrolls naturally like standard paragraphs */
+  .founder-message-section .wrap > div > div:first-child {
+    position: relative !important;
+    top: 0 !important;
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  /* Fits the blockquote text to fluid phone parameters */
+  .founder-message-section .wrap p.mono {
+    max-width: 100% !important;
+    margin-top: 14px !important;
+  }
+
+  /* Ensures full-width baseline text tracking */
+  .founder-narrative-rich-text {
+    width: 100% !important;
+    font-size: 15px !important; /* Slightly crisper body text pass on small devices */
+  }
+  /* HIGH-END FULLSCREEN BLURRED OVERLAY MASK */
+  .drawer {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    border-left: none !important;
+    padding: 32px 24px 48px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    z-index: 999 !important;
+    
+    /* Elegant theme-aware background tints with cinematic blur properties */
+    background: rgba(247, 241, 215, 0.4) !important; /* Soft paper center fallback transparency */
+    backdrop-filter: blur(0px) saturate(1) !important;
+    -webkit-backdrop-filter: blur(0px) saturate(1) !important;
+    
+    /* Absolute hidden state rules */
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(-10px) !important; /* Subtle downward drop vector */
+    transition: opacity 0.4s ease, backdrop-filter 0.4s ease, -webkit-backdrop-filter 0.4s ease, transform 0.4s var(--ease) !important;
+  }
+  
+  /* Dark mode theme color adaptation overlay */
+  html[data-theme="dark"] .drawer {
+    background: rgba(26, 22, 16, 0.4) !important;
+  }
+  
+  /* Active Open State */
+  .drawer.open {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+    backdrop-filter: blur(24px) saturate(1.6) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.6) !important;
+  }
+
+  .drawer-content-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  /* Center the link lists alignment in the middle of screen space */
+  .drawer-links {
+    margin: auto 0;
+    text-align: center !important;
+  }
+  
+  .drawer-links a {
+    font-size: 28px !important; /* Clean, bold, premium scale expansion */
+    font-weight: 800 !important;
+    border-bottom: none !important;
+    padding: 16px 0 !important;
+    display: block;
+    letter-spacing: -0.02em;
+    color: var(--ink) !important;
+  }
+
+  .drawer-bottom {
+    text-align: center !important;
+  }
+
+  /* Smooth cinematic fade-up intervals for text rows */
+  .drawer-links li, .drawer-bottom {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  }
+
+  .drawer.open .drawer-links li,
+  .drawer.open .drawer-bottom {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(0.15s + (var(--idx) * 0.05s));
+  }
 }
 </style>
 </head>
@@ -636,23 +1066,27 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
     </div>
   </div>
 </nav>
-
+<!------drawer-------->
 <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+
+<!-- Idea 1: Dynamic Morphing Clip-Path Bubble Drawer -->
 <aside class="drawer" id="drawer">
-  <div class="drawer-top">
-    <span style="font-size:18px;font-weight:800;letter-spacing:-0.02em">Brand<span style="background: var(--logo-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Kira</span></span>
-    <button class="drawer-close" onclick="toggleDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-  </div>
-  <ul class="drawer-links">
-    <li><a onclick="showPage('home');toggleDrawer()">Home</a></li>
-    <li><a onclick="showPage('services');toggleDrawer()">Services</a></li>
-    <li><a onclick="showPage('foundation');toggleDrawer()">Foundation</a></li>
-    <li><a onclick="showPage('about');toggleDrawer()">About</a></li>
-    <li><a onclick="showPage('Privacy');toggleDrawer()">Privacy Policy</a></li>
-  </ul>
-  <div class="drawer-bottom">
-    <a class="drawer-cta" onclick="showPage('contact');toggleDrawer()">Get a proposal</a>
-    <span class="drawer-meta">info@brandkira.com · Delhi, India</span>
+  <div class="drawer-content-wrapper">
+    <div class="drawer-top">
+      <span style="font-size:18px;font-weight:800;letter-spacing:-0.02em">Brand<span style="background: var(--logo-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Kira</span></span>
+      <button class="drawer-close" onclick="toggleDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <ul class="drawer-links">
+      <li style="--idx: 1;"><a onclick="showPage('home');toggleDrawer()">Home</a></li>
+      <li style="--idx: 2;"><a onclick="showPage('services');toggleDrawer()">Services</a></li>
+      <li style="--idx: 3;"><a onclick="showPage('foundation');toggleDrawer()">Foundation</a></li>
+      <li style="--idx: 4;"><a onclick="showPage('about');toggleDrawer()">About</a></li>
+      <li style="--idx: 5;"><a onclick="showPage('privacy');toggleDrawer()">Privacy Policy</a></li>
+    </ul>
+    <div class="drawer-bottom" style="--idx: 6;">
+      <a class="drawer-cta" onclick="showPage('contact');toggleDrawer()">Get a proposal</a>
+      <span class="drawer-meta">info@brandkira.com · Delhi, India</span>
+    </div>
   </div>
 </aside>
 
@@ -696,8 +1130,8 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
           <div class="pipe-connector"></div>
           <div class="pipe-node" data-i="4"><div class="pipe-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-5 4 4 8-9"/><path d="M14 7h6v6"/></svg></div><div><div class="pipe-label">Optimize</div><div class="pipe-sub">Data refined into decisions</div></div></div>
           <div class="pipe-connector"></div>
-          <div class="pipe-node" data-i="5"><div class="pipe-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="pipe-label">Scale</div><div class="pipe-sub">Sustainable growth, measurable impact</div></div>
-            <div class="pipe-result"><b id="revCounter">₹0</b><span>this campaign</span></div>
+          <div class="pipe-node" data-i="5"><div class="pipe-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="pipe-label">Scale</div><div class="pipe-sub">Sustainable growth,measurable impact</div></div>
+            <div class="pipe-result"><b id="revCounter" >₹0</b><span>this campaign</span></div>
           </div>
         </div>
       </div>
@@ -1736,7 +2170,7 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
     </div>
   </section>
   <section class="section-pad" style="padding-top:0">
-    <div class="wrap">
+    <!-- <div class="wrap">
       <div class="section-head"><span class="eyebrow">The team</span><h2 class="display-3">People behind the work</h2></div>
       <div class="team-grid">
         <div class="team-card"><div class="team-pic">YN</div><h4>Your Name</h4><div class="team-role">Founder &amp; Strategy</div><p>Sets the roadmap for every client engagement.</p></div>
@@ -1746,7 +2180,7 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
         <div class="team-card"><div class="team-pic">WD</div><h4>Web Developer</h4><div class="team-role">Design &amp; Dev</div><p>Ships fast, accessible sites built to convert.</p></div>
         <div class="team-card"><div class="team-pic">SM</div><h4>Social Lead</h4><div class="team-role">Content &amp; Community</div><p>Keeps every platform active and on-brand.</p></div>
       </div>
-    </div>
+    </div> -->
   </section>
 </div>
 
@@ -1758,8 +2192,8 @@ footer{padding:90px 0 40px;border-top:1px solid var(--line)}
       <h2>Ready to scale?</h2>
       <p>Tell us about your business and where it's stuck. We'll reply within one business day with next steps — or tell you honestly if we're not the right fit.</p>
       <div class="contact-detail">
-        <div class="cdx"><span>Email</span><span>hello@brandkira.in</span></div>
-        <div class="cdx"><span>Phone</span><span>+91 98100 00000</span></div>
+        <div class="cdx"><span>Email</span><span>info@brandkira.com</span></div>
+        <div class="cdx"><span>Phone</span><span>+91 97737 18446</span></div>
         <div class="cdx"><span>Office</span><span>Delhi NCR, India</span></div>
         <div class="cdx"><span>Response time</span><span>Within 24 hours</span></div>
       </div>
